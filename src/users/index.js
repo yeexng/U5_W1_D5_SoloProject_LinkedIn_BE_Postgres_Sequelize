@@ -1,6 +1,7 @@
 import express from "express";
 import createHttpError from "http-errors";
 import { Op } from "sequelize";
+import CommentsModel from "../comments/model.js";
 import ExperiencesModel from "../experiences/model.js";
 import PostsModel from "../posts/model.js";
 import UsersModel from "./model.js";
@@ -27,7 +28,7 @@ usersRouter.get("/", async (req, res, next) => {
         },
         {
           model: PostsModel,
-          attributes: ["postId", "text", "image", "createdAt"],
+          include: [{ model: CommentsModel }],
         },
       ],
     });
